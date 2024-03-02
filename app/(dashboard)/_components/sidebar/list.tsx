@@ -1,10 +1,12 @@
 'use client';
 
-import { useOrganizationList } from '@clerk/nextjs';
+import { useOrganization, useOrganizationList } from '@clerk/nextjs';
 import { useState } from 'react';
+import { Item } from './item';
 
 export const List = () => {
   const [isSelected, setIsSelected] = useState('');
+  const { organization } = useOrganization();
 
   const { isLoaded, setActive, userMemberships } = useOrganizationList({
     userMemberships: {
@@ -21,16 +23,12 @@ export const List = () => {
   return (
     <ul>
       {userMemberships.data.map((membership) => (
-        <button
-          className={`mb-3 ${isSelected === membership.organization.id && 'text-2xl'}`}
+        <Item
           key={membership.organization.id}
-          onClick={() => {
-            setActive({ organization: membership.organization.id });
-            setIsSelected(membership.organization.id);
-          }}
-        >
-          {membership.organization.name}
-        </button>
+          id={membership.organization.id}
+          imageUrl={membership.organization.imageUrl}
+          name={membership.organization.name}
+        />
       ))}
     </ul>
   );
