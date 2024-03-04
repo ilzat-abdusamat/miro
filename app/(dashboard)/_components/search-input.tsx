@@ -19,9 +19,6 @@ export const SearchInput = () => {
     setDebouncedValue(e.target.value);
   };
 
-  console.log('searchValue', searchValue);
-  console.log('debouncedValue', debouncedValue);
-
   useEffect(() => {
     const url = qs.stringifyUrl(
       {
