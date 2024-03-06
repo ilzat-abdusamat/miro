@@ -1,5 +1,6 @@
 'use client';
 
+import { EmptyBoards } from './empty-boards';
 import { EmptyFavorites } from './empty-favorites';
 import { EmptySearch } from './empty-search';
 
@@ -19,6 +20,10 @@ export const BoardList = ({ query }: BoardListProps) => {
 
   if (!data.length && query.favorites) {
     return <EmptyFavorites />;
+  }
+
+  if (!data.length) {
+    return <EmptyBoards />;
   }
 
   return <div>{JSON.stringify(query)}</div>;
