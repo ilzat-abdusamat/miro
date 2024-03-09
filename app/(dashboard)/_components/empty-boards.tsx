@@ -1,7 +1,20 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
+import { api } from '@/convex/_generated/api';
+import { useApiMutation } from '@/hooks/use-api-mutation';
+import { useAuth } from '@clerk/nextjs';
 import Image from 'next/image';
 
 export const EmptyBoards = () => {
+  const { mutate: createBoard, pending } = useApiMutation(api.board.create);
+
+  const { orgId } = useAuth();
+
+  const onClick = () => {
+    createBoard({ title: 'new-board', orgId: orgId! });
+  };
+
   return (
     <div className='h-full flex flex-col items-center justify-center'>
       <Image
@@ -15,7 +28,12 @@ export const EmptyBoards = () => {
         Start by creating a board for your orgaization
       </p>
       <div className='mt-6'>
-        <Button size='lg'>Create board</Button>
+        <Button
+          size='lg'
+          onClick={onClick}
+        >
+          {pending ? 'creating...' : 'Create board'}
+        </Button>
       </div>
     </div>
   );
