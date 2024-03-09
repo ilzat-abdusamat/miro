@@ -5,14 +5,16 @@ import { api } from '@/convex/_generated/api';
 import { useApiMutation } from '@/hooks/use-api-mutation';
 import { useAuth } from '@clerk/nextjs';
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 export const EmptyBoards = () => {
   const { mutate: createBoard, pending } = useApiMutation(api.board.create);
-
   const { orgId } = useAuth();
 
   const onClick = () => {
-    createBoard({ title: 'new-board', orgId: orgId! });
+    createBoard({ title: 'new-board', orgId: orgId! }).then((result) =>
+      toast.success(`Board ${result} created`)
+    );
   };
 
   return (

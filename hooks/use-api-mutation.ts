@@ -6,9 +6,9 @@ export const useApiMutation = (mutationFunction: any) => {
 
   const apiMutation = useMutation(mutationFunction);
 
-  const mutate = (payload: any) => {
+  const mutate = async (payload: any) => {
     setPending(true);
-    apiMutation(payload)
+    return apiMutation(payload)
       .finally(() => setPending(false))
       .then((result) => result)
       .catch((err) => {
