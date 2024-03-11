@@ -18,6 +18,7 @@ export const NewBoardButton = (props: NewBoardButtonProps) => {
   const router = useRouter();
 
   const { mutate: createBoard, pending } = useApiMutation(api.board.create);
+
   const onClick = () => {
     createBoard({ title: 'untitled', orgId: orgId! }).then((id) => {
       toast.success(`Board created!`);
