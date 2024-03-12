@@ -43,7 +43,11 @@ export const BoardCard = (props: BoardCardProps) => {
             className='object-fit'
           />
           <Overlay />
-          <Actions id={props.id}>
+          <Actions
+            id={props.id}
+            title={props.title}
+            side='right'
+          >
             <button className='absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity px-3 py-2 outline-none'>
               <MoreHorizontalIcon className='text-white opacity-75 hover:opacity-100 transition-opacity' />
             </button>
