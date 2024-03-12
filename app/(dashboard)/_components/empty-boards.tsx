@@ -12,7 +12,7 @@ export const EmptyBoards = () => {
   const { orgId } = useAuth();
 
   const onClick = () => {
-    createBoard({ title: 'new-board', orgId: orgId! }).then((result) =>
+    createBoard({ title: 'untitled', orgId: orgId! }).then((result) =>
       toast.success(`Board ${result} created`)
     );
   };

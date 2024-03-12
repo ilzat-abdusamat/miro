@@ -14,7 +14,6 @@ const images = [
   '/placeholders/10.svg',
 ];
 
-// Create a new task with the given text
 export const create = mutation({
   args: { title: v.string(), orgId: v.string() },
   handler: async (ctx, args) => {
@@ -34,5 +33,18 @@ export const create = mutation({
       imageUrl: randomImage,
     });
     return board;
+  },
+});
+
+export const deleteBoard = mutation({
+  args: { id: v.id('boards') },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error('Unauthorized');
+    }
+
+    await ctx.db.delete(args.id);
   },
 });
