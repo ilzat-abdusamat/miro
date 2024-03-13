@@ -6,13 +6,13 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { api } from '@/convex/_generated/api';
 import { useApiMutation } from '@/hooks/use-api-mutation';
+import { useRenameModal } from '@/hooks/use-rename-modal';
 import { DropdownMenuContentProps } from '@radix-ui/react-dropdown-menu';
-import { Link2Icon, Trash2Icon } from 'lucide-react';
+import { Link2Icon, PencilIcon, Trash2Icon } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface ActionsProps {
@@ -25,6 +25,15 @@ interface ActionsProps {
 
 const Actions = ({ children, side, sideOffset, id, title }: ActionsProps) => {
   const { mutate: deleteBoard, pending } = useApiMutation(api.board.deleteBoard);
+  const { mutate: updateBoard } = useApiMutation(api.board.update);
+
+  const renameModal = useRenameModal((state) => state);
+
+  const onUpdate = () => {
+    updateBoard({ id, title })
+      .then(() => toast.success('Board updated'))
+      .catch(() => toast.error('Failed to update the board'));
+  };
 
   const onDelete = () => {
     deleteBoard({ id })
@@ -49,7 +58,10 @@ const Actions = ({ children, side, sideOffset, id, title }: ActionsProps) => {
           sideOffset={sideOffset}
           className='w-60'
         >
-          <DropdownMenuItem>Rename</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => renameModal.onOpen(id, title)}>
+            <PencilIcon />
+            Rename
+          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={onCopyLink}
             className='p-3 cursor-pointer'
