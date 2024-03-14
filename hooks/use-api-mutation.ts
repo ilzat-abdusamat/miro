@@ -9,11 +9,11 @@ export const useApiMutation = (mutationFunction: any) => {
   const mutate = async (payload: any) => {
     setPending(true);
     return apiMutation(payload)
-      .finally(() => setPending(false))
       .then((result) => result)
       .catch((err) => {
         throw err;
-      });
+      })
+      .finally(() => setPending(false));
   };
 
   return {
