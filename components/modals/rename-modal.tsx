@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, useEffect, useState } from 'react';
 import {
   Dialog,
   DialogHeader,
@@ -23,6 +23,10 @@ export const RenameModal = () => {
 
   const [title, setTitle] = useState<string>(initialValues.title);
 
+  useEffect(() => {
+    setTitle(initialValues.title);
+  }, [initialValues.title]);
+
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
@@ -40,6 +44,7 @@ export const RenameModal = () => {
   };
 
   console.log('initialValues', initialValues);
+  console.log('title', title);
 
   return (
     <Dialog
